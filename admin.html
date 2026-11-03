@@ -9,6 +9,8 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Cairo', sans-serif; background: #f7f4f0; color: #111; min-height: 100vh; }
+    
+    /* شاشة الدخول */
     .login-screen { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; background: linear-gradient(135deg, #111, #2a2a2a); }
     .login-box { background: #fff; padding: 3rem 2.5rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 420px; width: 100%; text-align: center; }
     .login-box .icon-circle { width: 80px; height: 80px; background: linear-gradient(135deg, #c9a86a, #9c7c3f); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: #fff; font-size: 2rem; }
@@ -20,37 +22,48 @@
     .login-box button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(201,168,106,0.5); }
     .login-error { color: #e74c3c; font-size: 0.9rem; margin-bottom: 1rem; display: none; }
     .login-error.show { display: block; }
+
+    /* لوحة التحكم */
     .dashboard { display: none; }
     .dashboard.active { display: block; }
-    .admin-header { background: #111; color: #fff; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.2); }
+    .admin-header { background: #111; color: #fff; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.2); flex-wrap: wrap; gap: 1rem; }
     .admin-header h1 { color: #c9a86a; font-size: 1.3rem; display: flex; align-items: center; gap: 0.6rem; }
     .admin-header .actions { display: flex; gap: 1rem; align-items: center; }
     .admin-header .actions a, .admin-header .actions button { color: #fff; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-family: inherit; font-size: 0.9rem; border: none; cursor: pointer; transition: background 0.3s; }
     .admin-header .actions a:hover, .admin-header .actions button:hover { background: rgba(201,168,106,0.3); }
-    .admin-container { max-width: 1300px; margin: 2rem auto; padding: 0 1.5rem; }
-    .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .stat-card { background: #fff; padding: 1.5rem; border-radius: 14px; border: 1px solid #ece3d5; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; }
-    .stat-card .icon { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; flex-shrink: 0; }
+
+    .admin-container { max-width: 1300px; margin: 2rem auto; padding: 0 1rem; }
+    
+    /* الإحصائيات */
+    .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #fff; padding: 1.2rem; border-radius: 14px; border: 1px solid #ece3d5; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; }
+    .stat-card .icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #fff; flex-shrink: 0; }
     .stat-card .icon.gold { background: linear-gradient(135deg, #c9a86a, #9c7c3f); }
     .stat-card .icon.green { background: linear-gradient(135deg, #25D366, #128C7E); }
     .stat-card .icon.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
     .stat-card .icon.red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-    .stat-card .info h3 { font-size: 1.8rem; font-weight: 900; color: #111; }
-    .stat-card .info p { color: #666; font-size: 0.85rem; }
-    .filters { background: #fff; padding: 1rem 1.5rem; border-radius: 14px; border: 1px solid #ece3d5; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-    .filters input, .filters select { padding: 0.6rem 1rem; border: 1px solid #e0d5c5; border-radius: 8px; font-family: inherit; font-size: 0.9rem; flex: 1; min-width: 150px; }
+    .stat-card .info h3 { font-size: 1.5rem; font-weight: 900; color: #111; }
+    .stat-card .info p { color: #666; font-size: 0.8rem; }
+    
+    /* الفلاتر */
+    .filters { background: #fff; padding: 1rem; border-radius: 14px; border: 1px solid #ece3d5; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .filters input, .filters select { padding: 0.7rem 1rem; border: 1px solid #e0d5c5; border-radius: 8px; font-family: inherit; font-size: 0.9rem; flex: 1; min-width: 150px; }
     .filters input:focus, .filters select:focus { outline: none; border-color: #c9a86a; }
-    .filters .count-badge { background: #c9a86a; color: #fff; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; }
+    .filters .count-badge { background: #c9a86a; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+
+    /* الجدول (للكمبيوتر) */
     .table-wrap { background: #fff; border-radius: 14px; border: 1px solid #ece3d5; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     table { width: 100%; border-collapse: collapse; }
-    th { background: #111; color: #c9a86a; padding: 1rem 0.8rem; text-align: right; font-size: 0.85rem; font-weight: 700; }
+    th { background: #111; color: #c9a86a; padding: 1rem 0.8rem; text-align: right; font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
     td { padding: 0.9rem 0.8rem; border-bottom: 1px solid #f0ebe3; font-size: 0.9rem; }
     tr:hover td { background: #fdfaf5; }
-    .status-badge { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+    
+    .status-badge { display: inline-block; padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
     .status-pending { background: #fff3cd; color: #856404; }
     .status-confirmed { background: #d4edda; color: #155724; }
     .status-done { background: #cce5ff; color: #004085; }
     .status-cancelled { background: #f8d7da; color: #721c24; }
+    
     .action-btn { background: none; border: 1px solid #ddd; border-radius: 6px; padding: 0.4rem 0.6rem; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; margin: 0 2px; }
     .action-btn:hover { transform: scale(1.1); }
     .action-btn.confirm { color: #128C7E; border-color: #128C7E; }
@@ -61,10 +74,65 @@
     .action-btn.cancel:hover { background: #e74c3c; color: #fff; }
     .action-btn.delete { color: #721c24; border-color: #721c24; }
     .action-btn.delete:hover { background: #721c24; color: #fff; }
+
     .empty-state { padding: 4rem 2rem; text-align: center; color: #999; }
     .empty-state i { font-size: 4rem; color: #ddd; margin-bottom: 1rem; }
     .empty-state h3 { color: #666; margin-bottom: 0.5rem; }
-    @media (max-width: 900px) { .admin-header { flex-direction: column; gap: 1rem; text-align: center; } table { font-size: 0.8rem; } th, td { padding: 0.6rem 0.4rem; } .action-btn { padding: 0.3rem 0.4rem; font-size: 0.8rem; } }
+
+    /* ========================================= */
+    /* تصميم الجوال (بطاقات بدل الجدول) */
+    /* ========================================= */
+    @media (max-width: 768px) {
+      .admin-header { flex-direction: column; text-align: center; padding: 1rem; }
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; } /* إخفاء رأس الجدول */
+      
+      .table-wrap { border: none; box-shadow: none; background: transparent; }
+      
+      tbody tr {
+        background: #fff;
+        margin-bottom: 1rem;
+        border-radius: 12px;
+        border: 1px solid #ece3d5;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        padding: 1rem;
+        position: relative;
+      }
+      
+      /* عرض البيانات كسطور */
+      td {
+        border: none;
+        padding: 0.4rem 0;
+        text-align: right;
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      /* إضافة عنوان لكل سطر */
+      td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #888;
+        font-size: 0.8rem;
+      }
+
+      /* إخفاء الرقم التسلسلي في الجوال لتوفير المساحة */
+      td:first-child { display: none; }
+
+      /* تنسيق أزرار الإجراءات في الجوال */
+      td:last-child {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px dashed #eee;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
+      td:last-child::before { content: "الإجراءات:"; margin-left: auto; }
+      
+      .action-btn { padding: 0.6rem 1rem; font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -83,7 +151,7 @@
 
   <div class="dashboard" id="dashboard">
     <div class="admin-header">
-      <h1><i class="fa-solid fa-spa"></i> لوحة تحكم صالون لمسة جمال</h1>
+      <h1><i class="fa-solid fa-spa"></i> لوحة التحكم</h1>
       <div class="actions">
         <a href="index.html" target="_blank"><i class="fa-solid fa-external-link"></i> عرض الموقع</a>
         <button onclick="logout()"><i class="fa-solid fa-sign-out-alt"></i> خروج</button>
@@ -95,7 +163,7 @@
         <div class="stat-card"><div class="icon gold"><i class="fa-solid fa-calendar-check"></i></div><div class="info"><h3 id="totalBookings">0</h3><p>إجمالي الحجوزات</p></div></div>
         <div class="stat-card"><div class="icon blue"><i class="fa-solid fa-clock"></i></div><div class="info"><h3 id="pendingBookings">0</h3><p>قيد الانتظار</p></div></div>
         <div class="stat-card"><div class="icon green"><i class="fa-solid fa-check-circle"></i></div><div class="info"><h3 id="confirmedBookings">0</h3><p>مؤكدة</p></div></div>
-        <div class="stat-card"><div class="icon red"><i class="fa-solid fa-gift"></i></div><div class="info"><h3 id="couponBookings">0</h3><p>حجوزات بكوبون</p></div></div>
+        <div class="stat-card"><div class="icon red"><i class="fa-solid fa-gift"></i></div><div class="info"><h3 id="couponBookings">0</h3><p>بكوبون</p></div></div>
       </div>
 
       <div class="filters">
@@ -154,9 +222,27 @@
       if (filtered.length === 0) { tbody.innerHTML = ''; emptyState.style.display = 'block'; return; }
       emptyState.style.display = 'none';
       const statusMap = { 'pending': { label: 'قيد الانتظار', class: 'status-pending' }, 'confirmed': { label: 'مؤكدة', class: 'status-confirmed' }, 'done': { label: 'مكتملة', class: 'status-done' }, 'cancelled': { label: 'ملغاة', class: 'status-cancelled' } };
+      
       tbody.innerHTML = filtered.map((b, i) => {
         const st = statusMap[b.status] || statusMap.pending;
-        return `<tr><td>${filtered.length - i}</td><td><strong>${b.name}</strong></td><td><a href="tel:+967${b.phone}">${b.phone}</a></td><td>${b.service}</td><td>${b.date}</td><td>${b.time}</td><td>${b.coupon ? `<span class="status-badge status-confirmed">${b.coupon.code}</span>` : '—'}</td><td><span class="status-badge ${st.class}">${st.label}</span></td><td>${b.status === 'pending' ? `<button class="action-btn confirm" onclick="changeStatus(${b.id}, 'confirmed')" title="تأكيد">✓</button>` : ''}${b.status === 'confirmed' ? `<button class="action-btn done" onclick="changeStatus(${b.id}, 'done')" title="إكمال">✔</button>` : ''}${b.status !== 'cancelled' && b.status !== 'done' ? `<button class="action-btn cancel" onclick="changeStatus(${b.id}, 'cancelled')" title="إلغاء">✕</button>` : ''}<button class="action-btn delete" onclick="deleteBooking(${b.id})" title="حذف">🗑</button></td></tr>`;
+        // تمت إضافة data-label لكل خلية لكي تظهر في الجوال
+        return `
+          <tr>
+            <td data-label="#">${filtered.length - i}</td>
+            <td data-label="الاسم"><strong>${b.name}</strong></td>
+            <td data-label="الجوال"><a href="tel:+967${b.phone}" style="color:#2980b9;text-decoration:none;">${b.phone}</a></td>
+            <td data-label="الخدمة">${b.service}</td>
+            <td data-label="التاريخ">${b.date}</td>
+            <td data-label="الوقت">${b.time}</td>
+            <td data-label="كوبون">${b.coupon ? `<span class="status-badge status-confirmed">${b.coupon.code}</span>` : '—'}</td>
+            <td data-label="الحالة"><span class="status-badge ${st.class}">${st.label}</span></td>
+            <td data-label="إجراءات">
+              ${b.status === 'pending' ? `<button class="action-btn confirm" onclick="changeStatus(${b.id}, 'confirmed')" title="تأكيد الحجز">✓</button>` : ''}
+              ${b.status === 'confirmed' ? `<button class="action-btn done" onclick="changeStatus(${b.id}, 'done')" title="إكمال">✔</button>` : ''}
+              ${b.status !== 'cancelled' && b.status !== 'done' ? `<button class="action-btn cancel" onclick="changeStatus(${b.id}, 'cancelled')" title="إلغاء">✕</button>` : ''}
+              <button class="action-btn delete" onclick="deleteBooking(${b.id})" title="حذف">🗑</button>
+            </td>
+          </tr>`;
       }).join('');
     }
     function changeStatus(id, newStatus) { const bookings = getBookings(); const b = bookings.find(x => x.id === id); if (b) { b.status = newStatus; saveBookings(bookings); renderTable(); updateStats(); } }
