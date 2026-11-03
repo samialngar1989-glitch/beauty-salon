@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>صالون لمسة جمال | تعز - شارع جمال</title>
+  <meta name="description" content="صالون لمسة جمال في تعز - شارع جمال مقابل المهيوبي للتجارة.">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c9a86a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="لمسة جمال">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a86a;
+      --gold-dark: #9c7c3f;
+      --black: #111;
+      --cream: #f7f4f0;
+      --white: #fff;
+      --gray: #666;
+      --whatsapp: #25D366;
+      --whatsapp-dark: #128C7E;
+      --card-bg: #ffffff;
+      --card-border: #ece3d5;
+      --text-main: #111111;
+      --text-muted: #666666;
+    }
+
+    [data-theme="dark"] {
+      --cream: #1a1a1a; --white: #242424; --black: #f5f5f5;
+      --gray: #aaa; --card-bg: #2a2a2a; --card-border: #3a3a3a;
+      --text-main: #f5f5f5; --text-muted: #bbb;
+    }
+
+    [data-theme="dark"] body { background: #1a1a1a; color: #f5f5f5; }
+    [data-theme="dark"] .item-card,
+    [data-theme="dark"] .pricing,
+    [data-theme="dark"] .contact-wrap,
+    [data-theme="dark"] .testimonial-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="dark"] .contact-form input,
+    [data-theme="dark"] .contact-form textarea,
+    [data-theme="dark"] .contact-form select { background: #333; color: #fff; border-color: #444; }
+    [data-theme="dark"] .section-title { color: var(--gold); }
+    [data-theme="dark"] .price-row { border-color: #3a3a3a; }
+    [data-theme="dark"] header { background: rgba(0,0,0,0.98); }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    body.lang-en { font-family: 'Poppins', sans-serif; }
+    .lang-content { display: none; }
+    body.lang-ar .lang-ar { display: block; }
+    body.lang-en .lang-en { display: block; }
+
+    .progress-bar {
+      position: fixed; top: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+      width: 0%; z-index: 1000;
+    }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(17,17,17,0.95); backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+      gap: 1rem; flex-wrap: wrap;
+    }
+
+    .logo { color: var(--gold); font-size: 1.5rem; font-weight: 900;
+      display: flex; align-items: center; gap: 0.6rem; }
+
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav a { color: #fff; text-decoration: none; font-weight: 600;
+      font-size: 0.95rem; position: relative; transition: color 0.3s; }
+    nav a::after { content: ""; position: absolute; bottom: -6px; right: 0;
+      width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { width: 100%; }
+
+    .header-tools { display: flex; gap: 0.6rem; align-items: center; }
+    .tool-btn {
+      background: rgba(201,168,106,0.15); border: 1px solid var(--gold);
+      color: var(--gold); width: 40px; height: 40px; border-radius: 50%;
+      cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; font-family: inherit;
+    }
+    .tool-btn:hover { background: var(--gold); color: #111; transform: scale(1.1); }
+    .lang-btn { width: auto; padding: 0 0.8rem; border-radius: 20px;
+      font-weight: 700; font-size: 0.85rem; }
+    .menu-toggle { display: none; background: none; border: none;
+      color: var(--gold); font-size: 1.6rem; cursor: pointer; }
+
+    /* Hero */
+    .hero {
+      height: 90vh; min-height: 550px;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80') center/cover fixed;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: #fff; padding: 2rem;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--gold);
+      margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      animation: fadeUp 1s ease-out; }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease-out 0.2s both; }
+    .hero-location {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,168,106,0.25); border: 1px solid var(--gold);
+      padding: 0.5rem 1.2rem; border-radius: 30px; margin-bottom: 2rem;
+      animation: fadeUp 1s ease-out 0.4s both;
+    }
+    .hero-location i { color: var(--gold); }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center; animation: fadeUp 1s ease-out 0.6s both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); } }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff; padding: 0.85rem 2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 700; border: none;
+      cursor: pointer; font-size: 1rem; font-family: inherit;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 6px 20px rgba(201,168,106,0.4);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(201,168,106,0.6); }
+    .btn-whatsapp { background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+    .btn-whatsapp:hover { box-shadow: 0 10px 25px rgba(37,211,102,0.6); }
+
+    /* Stats */
+    .stats { background: var(--black); padding: 3rem 1rem; }
+    .stats-grid { max-width: 1000px; margin: 0 auto; display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem; text-align: center; }
+    .stat-item i { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .stat-item .number { font-size: 2.2rem; font-weight: 900; color: #fff; display: block; }
+    .stat-item .label { color: #aaa; font-size: 0.95rem; }
+    [data-theme="dark"] .stats { background: #0a0a0a; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 4rem 0; }
+    .section-title { text-align: center; font-size: 2rem; color: var(--text-main);
+      margin-bottom: 0.5rem; font-weight: 900; }
+    .section-subtitle { text-align: center; color: var(--text-muted);
+      margin-bottom: 3rem; font-size: 1rem; }
+    .section-title i { color: var(--gold); margin-left: 0.5rem; }
+
+    .reveal { opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem; }
+    .item-card { background: var(--card-bg); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex; flex-direction: column; }
+    .item-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .item-card img { width: 100%; height: 200px; object-fit: cover;
+      transition: transform 0.5s; }
+    .item-card:hover img { transform: scale(1.08); }
+    .img-wrap { overflow: hidden; position: relative; }
+    .img-wrap .badge { position: absolute; top: 12px; right: 12px;
+      background: var(--gold); color: #fff; padding: 0.3rem 0.8rem;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+    .item-body { padding: 1.3rem; flex: 1; display: flex; flex-direction: column; }
+    .item-body h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-main); }
+    .item-body p { color: var(--text-muted); font-size: 0.9rem; flex: 1; margin-bottom: 1rem; }
+    .item-footer { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+    .price { color: var(--gold-dark); font-weight: 900; font-size: 1.2rem;
+      display: flex; align-items: center; gap: 0.3rem; }
+    .book-btn { display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--whatsapp); color: #fff; padding: 0.5rem 0.9rem;
+      border-radius: 8px; text-decoration: none; font-weight: 700;
+      font-size: 0.85rem; transition: background 0.3s, transform 0.3s; font-family: inherit; }
+    .book-btn:hover { background: var(--whatsapp-dark); transform: scale(1.05); }
+
+    /* Gallery */
+    .masonry { column-count: 3; column-gap: 1rem; }
+    .masonry img { width: 100%; margin-bottom: 1rem; border-radius: 14px;
+      cursor: pointer; transition: transform 0.4s, filter 0.4s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); break-inside: avoid; display: block; }
+    .masonry img:hover { transform: scale(1.02); filter: brightness(1.1); }
+    @media (max-width: 900px) { .masonry { column-count: 2; } }
+    @media (max-width: 500px) { .masonry { column-count: 1; } }
+
+    /* Lightbox */
+    .lightbox { display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.95); z-index: 2000;
+      justify-content: center; align-items: center; padding: 2rem;
+      animation: fadeIn 0.3s; }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 12px;
+      box-shadow: 0 0 50px rgba(201,168,106,0.4); }
+    .lightbox .close { position: absolute; top: 20px; right: 30px;
+      font-size: 2.5rem; color: var(--gold); cursor: pointer;
+      background: none; border: none; transition: transform 0.3s; }
+    .lightbox .close:hover { transform: rotate(90deg); }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Testimonials */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .testimonial-card::before {
+      content: "\201C";
+      position: absolute; top: -10px; right: 20px;
+      font-size: 5rem; color: var(--gold); opacity: 0.3;
+      font-family: Georgia, serif; line-height: 1;
+    }
+    .testimonial-header {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+    }
+    .testimonial-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--gold);
+    }
+    .testimonial-info h4 { font-size: 1rem; margin-bottom: 0.2rem; color: var(--text-main); }
+    .testimonial-info .service-tag {
+      font-size: 0.75rem; color: var(--gold-dark); font-weight: 600;
+    }
+    .testimonial-stars { color: var(--gold); margin-bottom: 0.8rem; font-size: 0.95rem; }
+    .testimonial-text {
+      color: var(--text-muted); font-size: 0.95rem; line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* Coupon */
+    .coupon-banner {
+      background: linear-gradient(135deg, #111, #2a2a2a);
+      border: 2px dashed var(--gold);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .coupon-banner::before, .coupon-banner::after {
+      content: "";
+      position: absolute;
+      width: 30px; height: 30px;
+      background: var(--cream);
+      border-radius: 50%;
+      top: 50%; transform: translateY(-50%);
+    }
+    .coupon-banner::before { right: -15px; }
+    .coupon-banner::after { left: -15px; }
+    .coupon-banner h3 {
+      color: var(--gold); font-size: 1.4rem; margin-bottom: 0.5rem;
+    }
+    .coupon-banner p {
+      color: #ddd; margin-bottom: 1rem; font-size: 0.95rem;
+    }
+    .coupon-code {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,168,106,0.2);
+      border: 2px dashed var(--gold);
+      color: var(--gold);
+      padding: 0.7rem 1.5rem;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: monospace;
+    }
+    .coupon-code:hover {
+      background: var(--gold); color: #111;
+      transform: scale(1.05);
+    }
+    .coupon-code.copied {
+      background: var(--whatsapp); color: #fff; border-color: var(--whatsapp);
+    }
+
+    .coupon-input-wrap {
+      display: flex; gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .coupon-input-wrap input {
+      flex: 1; margin-bottom: 0 !important;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+    .coupon-input-wrap button {
+      padding: 0 1.2rem;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      transition: background 0.3s;
+    }
+    .coupon-input-wrap button:hover { background: var(--gold-dark); }
+    .coupon-msg {
+      font-size: 0.85rem; margin-top: 0.5rem; padding: 0.5rem;
+      border-radius: 8px; display: none; font-weight: 600;
+    }
+    .coupon-msg.success { display: block; background: rgba(37,211,102,0.15); color: #128C7E; }
+    .coupon-msg.error { display: block; background: rgba(231,76,60,0.15); color: #e74c3c; }
+
+    /* Pricing */
+    .pricing { background: var(--card-bg); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border: 1px solid var(--card-border); }
+    .price-row { display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 1.5rem; border-bottom: 1px dashed var(--card-border);
+      transition: background 0.3s; }
+    .price-row:last-child { border-bottom: none; }
+    .price-row:hover { background: rgba(201,168,106,0.05); }
+    .price-row .service { display: flex; align-items: center; gap: 0.8rem; font-weight: 600; }
+    .price-row .service i { color: var(--gold); font-size: 1.3rem; width: 30px; text-align: center; }
+    .price-row .amount { color: var(--gold-dark); font-weight: 900; font-size: 1.1rem; }
+
+    /* Contact */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      background: var(--card-bg); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border: 1px solid var(--card-border); }
+    .contact-info { background: linear-gradient(135deg, #111, #2a2a2a);
+      color: #fff; padding: 2.5rem; }
+    [data-theme="dark"] .contact-info { background: linear-gradient(135deg, #0a0a0a, #1a1a1a); }
+    .contact-info h3 { color: var(--gold); margin-bottom: 1.5rem; font-size: 1.4rem; }
+    .contact-info p { display: flex; align-items: flex-start; gap: 0.8rem;
+      margin-bottom: 1.2rem; color: #ddd; }
+    .contact-info i { color: var(--gold); font-size: 1.2rem; width: 24px; margin-top: 4px; }
+    .contact-info a { color: #ddd; text-decoration: none; transition: color 0.3s; }
+    .contact-info a:hover { color: var(--gold); }
+    .map-wrap { margin-top: 1.5rem; border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--gold); }
+    .map-wrap iframe { width: 100%; height: 200px; border: 0; display: block; }
+
+    .contact-form { padding: 2.5rem; }
+    .contact-form h3 { color: var(--gold-dark); margin-bottom: 1.2rem; font-size: 1.3rem; }
+    .form-group { margin-bottom: 1rem; position: relative; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600;
+      margin-bottom: 0.3rem; color: var(--text-muted); }
+    .contact-form input, .contact-form textarea, .contact-form select {
+      width: 100%; padding: 0.9rem 1rem;
+      border: 1px solid #e0d5c5; border-radius: 10px;
+      font-family: inherit; font-size: 0.95rem;
+      background: #fdfaf6; color: var(--text-main);
+      transition: border-color 0.3s, box-shadow 0.3s; }
+    [data-theme="dark"] .contact-form input,
+    [data-theme="dark"] .contact-form textarea,
+    [data-theme="dark"] .contact-form select { background: #333; border-color: #444; color: #fff; }
+    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,106,0.15); }
+    .contact-form input.invalid { border-color: #e74c3c;
+      box-shadow: 0 0 0 3px rgba(231,76,60,0.15); }
+    .contact-form textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .error-msg { color: #e74c3c; font-size: 0.8rem; margin-top: 0.3rem; display: none; }
+    .error-msg.show { display: block; }
+    .form-hint { font-size: 0.85rem; color: var(--text-muted);
+      margin-top: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+    .form-hint i { color: var(--whatsapp); }
+
+    /* Float */
+    .float-whatsapp, .float-top {
+      position: fixed; width: 55px; height: 55px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; text-decoration: none; z-index: 999;
+      transition: transform 0.3s, opacity 0.3s; border: none; cursor: pointer; }
+    .float-whatsapp { bottom: 90px; left: 25px;
+      background: var(--whatsapp); color: #fff;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      animation: pulse 2s infinite; }
+    .float-whatsapp:hover { transform: scale(1.1); color: #fff; }
+    .float-top { bottom: 25px; left: 25px;
+      background: var(--gold); color: #fff;
+      box-shadow: 0 6px 20px rgba(201,168,106,0.5);
+      opacity: 0; pointer-events: none; font-size: 1.2rem; }
+    .float-top.show { opacity: 1; pointer-events: auto; }
+    .float-top:hover { transform: scale(1.1); }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 30px rgba(37,211,102,0.9); }
+    }
+
+    /* Install PWA Banner */
+    .install-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(201,168,106,0.5);
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1000;
+      max-width: 340px;
+      animation: slideIn 0.5s ease-out;
+    }
+    .install-banner.show { display: flex; }
+    .install-banner i { font-size: 2rem; }
+    .install-banner .info { flex: 1; }
+    .install-banner .info strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .install-banner .info span { font-size: 0.8rem; opacity: 0.9; }
+    .install-banner .install-actions {
+      display: flex; gap: 0.5rem; align-items: center;
+    }
+    .install-banner button {
+      background: #fff; color: var(--gold-dark);
+      border: none; padding: 0.5rem 0.9rem;
+      border-radius: 8px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+    }
+    .install-banner button:hover { transform: scale(1.05); }
+    .install-banner .close-install {
+      background: transparent; color: #fff;
+      font-size: 1.2rem; padding: 0.3rem;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Footer */
+    footer { background: var(--black); color: #aaa;
+      text-align: center; padding: 2rem 1rem; margin-top: 3rem; }
+    footer .social { display: flex; justify-content: center;
+      gap: 1.2rem; margin-bottom: 1rem; }
+    footer .social a { color: var(--gold); font-size: 1.4rem;
+      transition: transform 0.3s, color 0.3s; }
+    footer .social a:hover { transform: scale(1.2); color: #fff; }
+    footer .footer-loc { margin-bottom: 1rem; display: inline-flex;
+      align-items: center; gap: 0.5rem; color: #ccc; }
+    footer .footer-loc i { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .menu-toggle { display: block; }
+      nav ul { position: absolute; top: 100%; right: 0; width: 100%;
+        background: #111; flex-direction: column; gap: 0;
+        max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+      nav ul.open { max-height: 400px; }
+      nav ul li { border-bottom: 1px solid #222; }
+      nav a { display: block; padding: 1rem 2rem; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .hero { height: 80vh; background-attachment: scroll; }
+      .hero-buttons .btn { width: 100%; justify-content: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .header-tools { order: -1; }
+      .install-banner { left: 10px; right: 10px; max-width: none; }
+    }
+  </style>
+</head>
+<body class="lang-ar">
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Install PWA Banner -->
+  <div class="install-banner" id="installBanner">
+    <i class="fa-solid fa-download"></i>
+    <div class="info">
+      <strong class="lang-ar">ثبّت التطبيق</strong>
+      <strong class="lang-en">Install App</strong>
+      <span class="lang-ar">للوصول السريع من شاشتك</span>
+      <span class="lang-en">Quick access from your home screen</span>
+    </div>
+    <div class="install-actions">
+      <button onclick="installPWA()" class="lang-ar">تثبيت</button>
+      <button onclick="installPWA()" class="lang-en">Install</button>
+      <button class="close-install" onclick="closeInstallBanner()">✕</button>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <i class="fa-solid fa-spa"></i>
+      <span class="lang-ar">لمسة جمال</span>
+      <span class="lang-en">Beauty Touch</span>
+    </div>
+
+    <div class="header-tools">
+      <button class="tool-btn lang-btn" onclick="toggleLanguage()">
+        <span class="lang-ar">EN</span>
+        <span class="lang-en">ع</span>
+      </button>
+      <button class="tool-btn" onclick="toggleTheme()">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="menu-toggle" onclick="document.getElementById('navList').classList.toggle('open')">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <nav>
+      <ul id="navList">
+        <li><a href="#home"><span class="lang-ar">الرئيسية</span><span class="lang-en">Home</span></a></li>
+        <li><a href="#services"><span class="lang-ar">الخدمات</span><span class="lang-en">Services</span></a></li>
+        <li><a href="#gallery"><span class="lang-ar">الأعمال</span><span class="lang-en">Gallery</span></a></li>
+        <li><a href="#testimonials"><span class="lang-ar">آراء العملاء</span><span class="lang-en">Reviews</span></a></li>
+        <li><a href="#pricing"><span class="lang-ar">الأسعار</span><span class="lang-en">Pricing</span></a></li>
+        <li><a href="#contact"><span class="lang-ar">تواصل معنا</span><span class="lang-en">Contact</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>
+      <span class="lang-ar">لمسة جمال تُبرز أنوثتك</span>
+      <span class="lang-en">A Touch of Beauty That Highlights Your Elegance</span>
+    </h1>
+    <p>
+      <span class="lang-ar">صالون متخصص في العناية بالشعر والمكياج والأظافر بأحدث التقنيات</span>
+      <span class="lang-en">A salon specialized in hair, makeup, and nails with the latest techniques</span>
+    </p>
+    <div class="hero-location">
+      <i class="fa-solid fa-location-dot"></i>
+      <span class="lang-ar">تعز - شارع جمال - مقابل المهيوبي للتجارة</span>
+      <span class="lang-en">Taiz - Jamal Street - Opposite Al-Mahyubi Trading</span>
+    </div>
+    <div class="hero-buttons">
+      <a href="#services" class="btn">
+        <i class="fa-solid fa-scissors"></i>
+        <span class="lang-ar">اكتشفي خدماتنا</span>
+        <span class="lang-en">Explore Services</span>
+      </a>
+      <a href="#contact" class="btn btn-whatsapp">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span class="lang-ar">احجزي الآن</span>
+        <span class="lang-en">Book Now</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <i class="fa-solid fa-award"></i>
+        <span class="number" data-count="10">0</span>
+        <span class="label lang-ar">سنوات خبرة</span>
+        <span class="label lang-en">Years of Experience</span>
+      </div>
+      <div class="stat-item reveal">
+        <i class="fa-solid fa-heart"></i>
+        <span class="number" data-count="5000">0</span>
+        <span class="label lang-ar">عميلة سعيدة</span>
+        <span class="label lang-en">Happy Clients</span>
+      </div>
+      <div class="stat-item reveal">
+        <i class="fa-solid fa-spa"></i>
+        <span class="number" data-count="25">0</span>
+        <span class="label lang-ar">خدمة احترافية</span>
+        <span class="label lang-en">Professional Services</span>
+      </div>
+      <div class="stat-item reveal">
+        <i class="fa-solid fa-star"></i>
+        <span class="number" data-count="5">0</span>
+        <span class="label lang-ar">تقييم النجوم</span>
+        <span class="label lang-en">Star Rating</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title reveal">
+        <i class="fa-solid fa-spa"></i>
+        <span class="lang-ar">خدماتنا</span>
+        <span class="lang-en">Our Services</span>
+      </h2>
+      <p class="section-subtitle reveal">
+        <span class="lang-ar">نقدم لكِ مجموعة متكاملة من خدمات التجميل الاحترافية</span>
+        <span class="lang-en">We offer you a complete range of professional beauty services</span>
+      </p>
+
+      <div class="grid">
+        <div class="item-card reveal">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" alt="قص">
+            <span class="badge lang-ar">الأكثر طلباً</span>
+            <span class="badge lang-en">Popular</span>
+          </div>
+          <div class="item-body">
+            <h3><span class="lang-ar">قص وتصفيف الشعر</span><span class="lang-en">Haircut & Styling</span></h3>
+            <p><span class="lang-ar">قصات عصرية وتصفيف احترافي يناسب شكل وجهكِ.</span><span class="lang-en">Modern cuts and professional styling that suits your face.</span></p>
+            <div class="item-footer">
+              <div class="price"><i class="fa-solid fa-tag"></i> <span class="lang-ar">من 150 ريال</span><span class="lang-en">From 150 YER</span></div>
+              <a href="https://wa.me/967773704939?text=أريد%20حجز%20قص%20وتصفيف" class="book-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i><span class="lang-ar">احجزي</span><span class="lang-en">Book</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card reveal">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" alt="مكياج">
+            <span class="badge lang-ar">جديد</span>
+            <span class="badge lang-en">New</span>
+          </div>
+          <div class="item-body">
+            <h3><span class="lang-ar">مكياج احترافي</span><span class="lang-en">Professional Makeup</span></h3>
+            <p><span class="lang-ar">مكياج سهرة، عروس، أو ناعم للنهار.</span><span class="lang-en">Evening, bridal, or soft daytime makeup.</span></p>
+            <div class="item-footer">
+              <div class="price"><i class="fa-solid fa-tag"></i> <span class="lang-ar">من 200 ريال</span><span class="lang-en">From 200 YER</span></div>
+              <a href="https://wa.me/967773704939?text=أريد%20حجز%20مكياج" class="book-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i><span class="lang-ar">احجزي</span><span class="lang-en">Book</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card reveal">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" alt="أظافر">
+          </div>
+          <div class="item-body">
+            <h3><span class="lang-ar">العناية بالأظافر</span><span class="lang-en">Nail Care</span></h3>
+            <p><span class="lang-ar">مانيكير، باديكير، وتركيب أظافر بأحدث الصيحات.</span><span class="lang-en">Manicure, pedicure, and nail extensions.</span></p>
+            <div class="item-footer">
+              <div class="price"><i class="fa-solid fa-tag"></i> <span class="lang-ar">من 80 ريال</span><span class="lang-en">From 80 YER</span></div>
+              <a href="https://wa.me/967773704939?text=أريد%20حجز%20أظافر" class="book-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i><span class="lang-ar">احجزي</span><span class="lang-en">Book</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-card reveal">
+          <div class="img-wrap">
+            <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80" alt="بشرة">
+          </div>
+          <div class="item-body">
+            <h3><span class="lang-ar">العناية بالبشرة</span><span class="lang-en">Skincare</span></h3>
+            <p><span class="lang-ar">تنظيف عميق، ترطيب، وعلاجات للبشرة.</span><span class="lang-en">Deep cleansing, hydration, and skin treatments.</span></p>
+            <div class="item-footer">
+              <div class="price"><i class="fa-solid fa-tag"></i> <span class="lang-ar">من 180 ريال</span><span class="lang-en">From 180 YER</span></div>
+              <a href="https://wa.me/967773704939?text=أريد%20حجز%20عناية%20بالبشرة" class="book-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i><span class="lang-ar">احجزي</span><span class="lang-en">Book</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <h2 class="section-title reveal">
+        <i class="fa-solid fa-images"></i>
+        <span class="lang-ar">أعمالنا</span>
+        <span class="lang-en">Our Work</span>
+      </h2>
+      <p class="section-subtitle reveal">
+        <span class="lang-ar">اضغطي على أي صورة لعرضها بالحجم الكامل</span>
+        <span class="lang-en">Click any image to view it in full size</span>
+      </p>
+
+      <div class="masonry">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=80" alt="عمل 1">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80" alt="عمل 2">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="عمل 3">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" alt="عمل 4">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" alt="عمل 5">
+        <img onclick="openLightbox(this.src)" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80" alt="عمل 6">
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="close" onclick="closeLightbox(event, true)"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightboxImg" src="" alt="عرض الصورة">
+  </div>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="background:var(--white);">
+    <div class="container">
+      <h2 class="section-title reveal">
+        <i class="fa-solid fa-quote-right"></i>
+        <span class="lang-ar">آراء عميلاتنا</span>
+        <span class="lang-en">What Our Clients Say</span>
+      </h2>
+      <p class="section-subtitle reveal">
+        <span class="lang-ar">شهادات حقيقية من عميلاتنا العزيزات</span>
+        <span class="lang-en">Real testimonials from our dear clients</span>
+      </p>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-header">
+            <img class="testimonial-avatar" src="https://i.pravatar.cc/100?img=1" alt="سارة">
+            <div class="testimonial-info">
+              <h4><span class="lang-ar">سارة أحمد</span><span class="lang-en">Sara Ahmed</span></h4>
+              <span class="service-tag lang-ar">مكياج عروس</span>
+              <span class="service-tag lang-en">Bridal Makeup</span>
+            </div>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text lang-ar">"تجربة رائعة! المكياج كان مثالي ليوم زفافي، والاهتمام بالتفاصيل مذهل. أنصح كل عروس بزيارة الصالون."</p>
+          <p class="testimonial-text lang-en">"Amazing experience! The makeup was perfect for my wedding day, and the attention to detail is incredible."</p>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-header">
+            <img class="testimonial-avatar" src="https://i.pravatar.cc/100?img=5" alt="ليلى">
+            <div class="testimonial-info">
+              <h4><span class="lang-ar">ليلى محمد</span><span class="lang-en">Layla Mohammed</span></h4>
+              <span class="service-tag lang-ar">قص وتصفيف</span>
+              <span class="service-tag lang-en">Haircut</span>
+            </div>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text lang-ar">"أفضل صالون في تعز! القصات احترافية والموظفات ودودات جداً. أصبحت عميلة دائمة."</p>
+          <p class="testimonial-text lang-en">"Best salon in Taiz! Professional haircuts and very friendly staff. I'm now a loyal customer."</p>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-header">
+            <img class="testimonial-avatar" src="https://i.pravatar.cc/100?img=9" alt="نور">
+            <div class="testimonial-info">
+              <h4><span class="lang-ar">نور علي</span><span class="lang-en">Noor Ali</span></h4>
+              <span class="service-tag lang-ar">العناية بالبشرة</span>
+              <span class="service-tag lang-en">Skincare</span>
+            </div>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-text lang-ar">"جلسة تنظيف البشرة كانت مريحة جداً، وبشرتي أصبحت أكثر إشراقاً. شكراً لمسة جمال!"</p>
+          <p class="testimonial-text lang-en">"The facial was very relaxing, and my skin became brighter. Thanks Beauty Touch!"</p>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-header">
+            <img class="testimonial-avatar" src="https://i.pravatar.cc/100?img=16" alt="مريم">
+            <div class="testimonial-info">
+              <h4><span class="lang-ar">مريم حسن</span><span class="lang-en">Mariam Hassan</span></h4>
+              <span class="service-tag lang-ar">مانيكير وباديكير</span>
+              <span class="service-tag lang-en">Manicure & Pedicure</span>
+            </div>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+          <p class="testimonial-text lang-ar">"خدمة ممتازة وأسعار مناسبة. الأظافر تدوم لفترة طويلة والصالون نظيف جداً."</p>
+          <p class="testimonial-text lang-en">"Excellent service and reasonable prices. Nails last long and the salon is very clean."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coupons + Booking -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title reveal">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span class="lang-ar">احجزي موعدك</span>
+        <span class="lang-en">Book Your Appointment</span>
+      </h2>
+      <p class="section-subtitle reveal">
+        <span class="lang-ar">اختاري التاريخ والوقت المناسب لكِ</span>
+        <span class="lang-en">Choose your preferred date and time</span>
+      </p>
+
+      <!-- كوبون -->
+      <div class="coupon-banner reveal">
+        <h3><i class="fa-solid fa-gift"></i>
+          <span class="lang-ar">خصم 20% على زيارتك الأولى!</span>
+          <span class="lang-en">20% Off Your First Visit!</span>
+        </h3>
+        <p>
+          <span class="lang-ar">استخدمي الكود التالي عند الحجز</span>
+          <span class="lang-en">Use the following code when booking</span>
+        </p>
+        <div class="coupon-code" onclick="copyCoupon(this)">
+          <span>WELCOME20</span>
+          <i class="fa-solid fa-copy" style="font-size:0.9rem;"></i>
+        </div>
+        <p style="font-size:0.8rem; margin-top:0.8rem; color:#999;">
+          <span class="lang-ar">اضغطي على الكود لنسخه</span>
+          <span class="lang-en">Click to copy</span>
+        </p>
+      </div>
+
+      <div class="contact-wrap reveal">
+        <div class="contact-info">
+          <h3>
+            <span class="lang-ar">معلومات التواصل</span>
+            <span class="lang-en">Contact Information</span>
+          </h3>
+          <p>
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="lang-ar">تعز - شارع جمال - مقابل المهيوبي للتجارة</span>
+            <span class="lang-en">Taiz - Jamal Street - Opposite Al-Mahyubi Trading</span>
+          </p>
+          <p><i class="fa-solid fa-phone"></i><a href="tel:+967773704939">773 704 939</a></p>
+          <p><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/967773704939" target="_blank">WhatsApp: 773 704 939</a></p>
+          <p>
+            <i class="fa-solid fa-clock"></i>
+            <span class="lang-ar">يومياً: 10 ص - 10 م</span>
+            <span class="lang-en">Daily: 10 AM - 10 PM</span>
+          </p>
+          <div class="map-wrap">
+            <iframe src="https://www.google.com/maps?q=تعز+شارع+جمال+اليمن&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="الموقع"></iframe>
+          </div>
+        </div>
+
+        <form class="contact-form" onsubmit="sendBooking(event)" novalidate>
+          <h3><span class="lang-ar">نموذج الحجز</span><span class="lang-en">Booking Form</span></h3>
+
+          <div class="form-group">
+            <label><span class="lang-ar">الاسم الكريم *</span><span class="lang-en">Your Name *</span></label>
+            <input type="text" id="name" required>
+          </div>
+
+          <div class="form-group">
+            <label><span class="lang-ar">رقم الجوال *</span><span class="lang-en">Phone *</span></label>
+            <input type="tel" id="phone" placeholder="7XXXXXXXX" required>
+            <div class="error-msg" id="phoneError">
+              <span class="lang-ar">رقم جوال غير صحيح (9 أرقام تبدأ بـ 7)</span>
+              <span class="lang-en">Invalid phone (9 digits starting with 7)</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label><span class="lang-ar">الخدمة *</span><span class="lang-en">Service *</span></label>
+            <select id="service" required>
+              <option value="">--</option>
+              <option value="قص وتصفيف الشعر">قص وتصفيف الشعر</option>
+              <option value="مكياج احترافي">مكياج احترافي</option>
+              <option value="العناية بالأظافر">العناية بالأظافر</option>
+              <option value="العناية بالبشرة">العناية بالبشرة</option>
+              <option value="صبغة شعر">صبغة شعر</option>
+              <option value="مكياج عروس">مكياج عروس</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label><span class="lang-ar">التاريخ *</span><span class="lang-en">Date *</span></label>
+              <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+              <label><span class="lang-ar">الوقت *</span><span class="lang-en">Time *</span></label>
+              <input type="time" id="time" min="10:00" max="22:00" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label><span class="lang-ar">كود الخصم (اختياري)</span><span class="lang-en">Coupon (optional)</span></label>
+            <div class="coupon-input-wrap">
+              <input type="text" id="couponInput" placeholder="WELCOME20">
+              <button type="button" onclick="validateCoupon()">
+                <span class="lang-ar">تحقق</span><span class="lang-en">Check</span>
+              </button>
+            </div>
+            <div class="coupon-msg" id="couponMsg"></div>
+          </div>
+
+          <div class="form-group">
+            <label><span class="lang-ar">ملاحظات</span><span class="lang-en">Notes</span></label>
+            <textarea id="message"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-whatsapp" style="width:100%;justify-content:center;">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span class="lang-ar">تأكيد الحجز عبر واتساب</span>
+            <span class="lang-en">Confirm via WhatsApp</span>
+          </button>
+          <p class="form-hint">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span class="lang-ar">سيُفتح واتساب لإرسال الحجز</span>
+            <span class="lang-en">WhatsApp will open to send your booking</span>
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <a href="https://wa.me/967773704939" class="float-whatsapp" target="_blank" aria-label="واتساب">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <button class="float-top" id="floatTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="أعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <footer>
+    <div class="social">
+      <a href="#" aria-label="انستغرام"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" aria-label="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#" aria-label="سناب شات"><i class="fa-brands fa-snapchat"></i></a>
+      <a href="https://wa.me/967773704939" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+    <p class="footer-loc">
+      <i class="fa-solid fa-location-dot"></i>
+      <span class="lang-ar">تعز - شارع جمال - مقابل المهيوبي للتجارة</span>
+      <span class="lang-en">Taiz - Jamal Street - Opposite Al-Mahyubi Trading</span>
+    </p>
+    <p>
+      <span class="lang-ar">© 2026 صالون لمسة جمال - جميع الحقوق محفوظة</span>
+      <span class="lang-en">© 2026 Beauty Touch Salon</span>
+    </p>
+    <p style="font-size:0.75rem; margin-top:0.5rem;">
+      <a href="admin.html" style="color:#666; text-decoration:none;">
+        <i class="fa-solid fa-lock"></i>
+        <span class="lang-ar">لوحة التحكم</span>
+        <span class="lang-en">Admin Panel</span>
+      </a>
+    </p>
+  </footer>
+
+  <script>
+    // ===== Theme =====
+    function toggleTheme() {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.body.removeAttribute('data-theme');
+        document.getElementById('themeIcon').className = 'fa-solid fa-moon';
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+    }
+
+    // ===== Language =====
+    function toggleLanguage() {
+      const isEn = document.body.classList.contains('lang-en');
+      if (isEn) {
+        document.body.classList.remove('lang-en');
+        document.body.classList.add('lang-ar');
+        document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.setAttribute('dir', 'rtl');
+        localStorage.setItem('lang', 'ar');
+      } else {
+        document.body.classList.remove('lang-ar');
+        document.body.classList.add('lang-en');
+        document.documentElement.setAttribute('lang', 'en');
+        document.documentElement.setAttribute('dir', 'ltr');
+        localStorage.setItem('lang', 'en');
+      }
+    }
+    if (localStorage.getItem('lang') === 'en') {
+      document.body.classList.remove('lang-ar');
+      document.body.classList.add('lang-en');
+      document.documentElement.setAttribute('lang', 'en');
+      document.documentElement.setAttribute('dir', 'ltr');
+    }
+
+    // ===== Coupons =====
+    const COUPONS = {
+      'WELCOME20': { discount: 20, desc: 'خصم 20% على الزيارة الأولى' },
+      'BEAUTY10': { discount: 10, desc: 'خصم 10%' },
+      'VIP30': { discount: 30, desc: 'خصم 30% للعميلات المميزات' }
+    };
+    let appliedCoupon = null;
+
+    function copyCoupon(el) {
+      const code = 'WELCOME20';
+      navigator.clipboard.writeText(code).then(() => {
+        el.classList.add('copied');
+        const originalHTML = el.innerHTML;
+        el.innerHTML = '<span>✓<span> ' + code;
+        setTimeout(() => {
+          el.innerHTML = originalHTML;
+          el.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function validateCoupon() {
+      const code = document.getElementById('couponInput').value.trim().toUpperCase();
+      const msg = document.getElementById('couponMsg');
+      const isEn = document.body.classList.contains('lang-en');
+
+      if (!code) {
+        msg.className = 'coupon-msg error';
+        msg.textContent = isEn ? 'Please enter a coupon code' : 'الرجاء إدخال كود الخصم';
+        appliedCoupon = null;
+        return;
+      }
+
+      if (COUPONS[code]) {
+        appliedCoupon = { code: code, ...COUPONS[code] };
+        msg.className = 'coupon-msg success';
+        msg.textContent = isEn
+          ? `✓ Valid! You get ${COUPONS[code].discount}% off`
+          : `✓ كود صحيح! حصلتِ على خصم ${COUPONS[code].discount}%`;
+      } else {
+        appliedCoupon = null;
+        msg.className = 'coupon-msg error';
+        msg.textContent = isEn ? '✗ Invalid coupon code' : '✗ كود الخصم غير صحيح';
+      }
+    }
+
+    // ===== Booking =====
+    function sendBooking(e) {
+      e.preventDefault();
+
+      const name    = document.getElementById('name').value.trim();
+      const phone   = document.getElementById('phone').value.trim();
+      const service = document.getElementById('service').value;
+      const date    = document.getElementById('date').value;
+      const time    = document.getElementById('time').value;
+      const message = document.getElementById('message').value.trim() || '—';
+      const phoneInput = document.getElementById('phone');
+      const phoneError = document.getElementById('phoneError');
+      const isEn = document.body.classList.contains('lang-en');
+
+      const phoneRegex = /^7[0-9]{8}$/;
+      if (!phoneRegex.test(phone)) {
+        phoneInput.classList.add('invalid');
+        phoneError.classList.add('show');
+        phoneInput.focus();
+        return;
+      }
+      phoneInput.classList.remove('invalid');
+      phoneError.classList.remove('show');
+
+      const dateObj = new Date(date);
+      const dateFormatted = isEn
+        ? dateObj.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' })
+        : dateObj.toLocaleDateString('ar-EG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+      const [h, m] = time.split(':');
+      const hour = parseInt(h);
+      const period = hour >= 12 ? (isEn ? 'PM' : 'م') : (isEn ? 'AM' : 'ص');
+      const hour12 = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
+      const timeFormatted = `${hour12}:${m} ${period}`;
+
+      // حفظ الحجز محلياً
+      saveBooking({ name, phone, service, date: dateFormatted, time: timeFormatted, message, coupon: appliedCoupon });
+
+      let text;
+      if (isEn) {
+        text = '🌸 *New Booking - Beauty Touch* 🌸\n\n' +
+          '👤 *Name:* ' + name + '\n' +
+          '📱 *Phone:* ' + phone + '\n' +
+          '💅 *Service:* ' + service + '\n' +
+          '📅 *Date:* ' + dateFormatted + '\n' +
+          '⏰ *Time:* ' + timeFormatted + '\n' +
+          '📝 *Notes:* ' + message;
+        if (appliedCoupon) {
+          text += '\n🎁 *Coupon:* ' + appliedCoupon.code + ' (-' + appliedCoupon.discount + '%)';
+        }
+        text += '\n\n━━━━━━━━━━━━━━━━━━';
+      } else {
+        text = '🌸 *طلب حجز جديد - لمسة جمال* 🌸\n\n' +
+          '👤 *الاسم:* ' + name + '\n' +
+          '📱 *الجوال:* ' + phone + '\n' +
+          '💅 *الخدمة:* ' + service + '\n' +
+          '📅 *التاريخ:* ' + dateFormatted + '\n' +
+          '⏰ *الوقت:* ' + timeFormatted + '\n' +
+          '📝 *ملاحظات:* ' + message;
+        if (appliedCoupon) {
+          text += '\n🎁 *كود الخصم:* ' + appliedCoupon.code + ' (-' + appliedCoupon.discount + '%)';
+        }
+        text += '\n\n━━━━━━━━━━━━━━━━━━';
+      }
+
+      const url = 'https://wa.me/967773704939?text=' + encodeURIComponent(text);
+      window.open(url, '_blank') || (window.location.href = url);
+    }
+
+    function saveBooking(booking) {
+      const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+      booking.id = Date.now();
+      booking.timestamp = new Date().toISOString();
+      booking.status = 'pending';
+      bookings.push(booking);
+      localStorage.setItem('bookings', JSON.stringify(bookings));
+    }
+
+    // ===== Lightbox =====
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e, force) {
+      if (force || e.target.id === 'lightbox') {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox(null, true);
+    });
+
+    // ===== Scroll =====
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progressBar').style.width = (scrollTop / docHeight) * 100 + '%';
+      document.getElementById('floatTop').classList.toggle('show', scrollTop > 400);
+    });
+
+    // ===== Reveal + Counters =====
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('active');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target.querySelector('.number');
+          const target = +counter.dataset.count;
+          let current = 0;
+          const step = target / 60;
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              counter.textContent = target + '+';
+              clearInterval(timer);
+            } else {
+              counter.textContent = Math.ceil(current);
+            }
+          }, 25);
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-item').forEach(el => statsObserver.observe(el));
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navList').classList.remove('open');
+      });
+    });
+
+    const dateInput = document.getElementById('date');
+    dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+
+    // ===== PWA =====
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!localStorage.getItem('installDismissed')) {
+        setTimeout(() => document.getElementById('installBanner').classList.add('show'), 3000);
+      }
+    });
+
+    function installPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choice => {
+          if (choice.outcome === 'accepted') {
+            document.getElementById('installBanner').classList.remove('show');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }
+
+    function closeInstallBanner() {
+      document.getElementById('installBanner').classList.remove('show');
+      localStorage.setItem('installDismissed', 'true');
+    }
+
+    // تسجيل Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+      });
+    }
+  </script>
+
+</body>
+</html>
