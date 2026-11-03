@@ -52,6 +52,9 @@
     .filters .count-badge { background: #c9a86a; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
 
     /* الجدول (للكمبيوتر) */
+    .desktop-table { display: block; }
+    .mobile-cards { display: none; }
+    
     .table-wrap { background: #fff; border-radius: 14px; border: 1px solid #ece3d5; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     table { width: 100%; border-collapse: collapse; }
     th { background: #111; color: #c9a86a; padding: 1rem 0.8rem; text-align: right; font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
@@ -80,65 +83,62 @@
     .empty-state h3 { color: #666; margin-bottom: 0.5rem; }
 
     /* ========================================= */
-    /* تصميم الجوال (بطاقات بدل الجدول) */
+    /* تصميم الجوال (بطاقات مبنية برمجياً) */
     /* ========================================= */
     @media (max-width: 768px) {
       .admin-header { flex-direction: column; text-align: center; padding: 1rem; }
       
-      /* إخفاء رأس الجدول وإجبار العناصر على العرض كبطاقات */
-      table, thead, tbody, th, td, tr { display: block !important; }
-      thead { display: none !important; }
-      
-      .table-wrap { border: none !important; box-shadow: none !important; background: transparent !important; }
-      
-      tbody tr {
-        background: #fff !important;
-        margin-bottom: 1.5rem !important;
-        border-radius: 12px !important;
-        border: 1px solid #ece3d5 !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-        padding: 1rem !important;
-        position: relative !important;
-      }
-      
-      /* عرض البيانات كسطور مرتبة */
-      td {
-        border: none !important;
-        padding: 0.6rem 0 !important;
-        text-align: right !important;
-        font-size: 0.95rem !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        border-bottom: 1px dashed #f0ebe3 !important;
-      }
-      td:last-child { border-bottom: none !important; }
-      
-      /* إضافة عنوان لكل سطر */
-      td::before {
-        content: attr(data-label) !important;
-        font-weight: 700 !important;
-        color: #888 !important;
-        font-size: 0.85rem !important;
-        margin-left: 10px !important;
-      }
+      /* إخفاء الجدول وإظهار البطاقات */
+      .desktop-table { display: none !important; }
+      .mobile-cards { display: block !important; }
 
-      /* إخفاء الرقم التسلسلي */
-      td:first-child { display: none !important; }
-
-      /* تنسيق أزرار الإجراءات في الجوال */
-      td:last-child {
-        margin-top: 1rem !important;
-        padding-top: 1rem !important;
-        border-top: 2px solid #c9a86a !important;
-        justify-content: center !important;
-        gap: 1rem !important;
-        flex-wrap: wrap !important;
+      .booking-card {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid #ece3d5;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 1.2rem;
+        overflow: hidden;
       }
-      td:last-child::before { display: none !important; }
       
-      .action-btn { padding: 0.8rem 1.5rem !important; font-size: 1.2rem !important; border-radius: 10px !important; flex: 1 !important; text-align: center !important; }
-      .status-badge { font-size: 0.9rem !important; padding: 0.4rem 1rem !important; }
+      .card-header {
+        background: #fdfaf6;
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid #ece3d5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-header .name { font-weight: 900; font-size: 1.1rem; color: #c9a86a; }
+      
+      .card-body { padding: 1rem; }
+      
+      /* تنسيق الصفين */
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+      }
+      .info-row:last-child { margin-bottom: 0; }
+      .info-label { color: #888; font-weight: 600; }
+      .info-value { font-weight: 700; color: #222; text-align: left; direction: ltr; }
+      
+      .card-footer {
+        background: #f9f9f9;
+        padding: 1rem;
+        border-top: 1px solid #ece3d5;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: space-between;
+      }
+      
+      .card-footer .action-btn {
+        flex: 1;
+        padding: 0.7rem;
+        font-size: 1rem;
+        border-radius: 8px;
+      }
     }
   </style>
 </head>
@@ -185,18 +185,24 @@
         <span class="count-badge" id="countBadge">0 حجز</span>
       </div>
 
-      <div class="table-wrap">
+      <!-- جدول للكمبيوتر -->
+      <div class="table-wrap desktop-table">
         <table>
           <thead>
             <tr><th>#</th><th>الاسم</th><th>الجوال</th><th>الخدمة</th><th>التاريخ</th><th>الوقت</th><th>كوبون</th><th>الحالة</th><th>إجراءات</th></tr>
           </thead>
           <tbody id="bookingsTable"></tbody>
         </table>
-        <div class="empty-state" id="emptyState" style="display:none;">
-          <i class="fa-regular fa-calendar-xmark"></i>
-          <h3>لا توجد حجوزات</h3>
-          <p>لم يتم تسجيل أي حجز بعد</p>
-        </div>
+      </div>
+
+      <!-- بطاقات للجوال -->
+      <div class="mobile-cards" id="mobileCards"></div>
+      
+      <!-- حالة فارغة -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <i class="fa-regular fa-calendar-xmark"></i>
+        <h3>لا توجد حجوزات</h3>
+        <p>لم يتم تسجيل أي حجز بعد</p>
       </div>
     </div>
   </div>
@@ -204,12 +210,32 @@
   <script>
     const ADMIN_PASSWORD = 'admin123';
     const STORAGE_KEY = 'adminAuth';
-    function login() { const pass = document.getElementById('passwordInput').value; if (pass === ADMIN_PASSWORD) { sessionStorage.setItem(STORAGE_KEY, 'true'); showDashboard(); } else { document.getElementById('loginError').classList.add('show'); document.getElementById('passwordInput').value = ''; } }
+    
+    function login() { 
+      const pass = document.getElementById('passwordInput').value; 
+      if (pass === ADMIN_PASSWORD) { 
+        sessionStorage.setItem(STORAGE_KEY, 'true'); 
+        showDashboard(); 
+      } else { 
+        document.getElementById('loginError').classList.add('show'); 
+        document.getElementById('passwordInput').value = ''; 
+      } 
+    }
+    
     function logout() { sessionStorage.removeItem(STORAGE_KEY); location.reload(); }
-    function showDashboard() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('dashboard').classList.add('active'); renderTable(); updateStats(); }
+    
+    function showDashboard() { 
+      document.getElementById('loginScreen').style.display = 'none'; 
+      document.getElementById('dashboard').classList.add('active'); 
+      renderTable(); 
+      updateStats(); 
+    }
+    
     if (sessionStorage.getItem(STORAGE_KEY) === 'true') { showDashboard(); }
+    
     function getBookings() { return JSON.parse(localStorage.getItem('bookings') || '[]'); }
     function saveBookings(bookings) { localStorage.setItem('bookings', JSON.stringify(bookings)); }
+    
     function updateStats() {
       const bookings = getBookings();
       document.getElementById('totalBookings').textContent = bookings.length;
@@ -217,32 +243,53 @@
       document.getElementById('confirmedBookings').textContent = bookings.filter(b => b.status === 'confirmed').length;
       document.getElementById('couponBookings').textContent = bookings.filter(b => b.coupon).length;
     }
+    
     function renderTable() {
       const bookings = getBookings();
       const search = document.getElementById('searchInput').value.toLowerCase();
       const statusFilter = document.getElementById('statusFilter').value;
-      let filtered = bookings.filter(b => { const matchSearch = !search || b.name.toLowerCase().includes(search) || b.phone.includes(search); const matchStatus = statusFilter === 'all' || b.status === statusFilter; return matchSearch && matchStatus; });
+      let filtered = bookings.filter(b => { 
+        const matchSearch = !search || b.name.toLowerCase().includes(search) || b.phone.includes(search); 
+        const matchStatus = statusFilter === 'all' || b.status === statusFilter; 
+        return matchSearch && matchStatus; 
+      });
       filtered.sort((a, b) => b.id - a.id);
-      const tbody = document.getElementById('bookingsTable');
-      const emptyState = document.getElementById('emptyState');
-      document.getElementById('countBadge').textContent = filtered.length + ' حجز';
-      if (filtered.length === 0) { tbody.innerHTML = ''; emptyState.style.display = 'block'; return; }
-      emptyState.style.display = 'none';
-      const statusMap = { 'pending': { label: 'قيد الانتظار', class: 'status-pending' }, 'confirmed': { label: 'مؤكدة', class: 'status-confirmed' }, 'done': { label: 'مكتملة', class: 'status-done' }, 'cancelled': { label: 'ملغاة', class: 'status-cancelled' } };
       
+      const tbody = document.getElementById('bookingsTable');
+      const mobileCards = document.getElementById('mobileCards');
+      const emptyState = document.getElementById('emptyState');
+      
+      document.getElementById('countBadge').textContent = filtered.length + ' حجز';
+      
+      if (filtered.length === 0) { 
+        tbody.innerHTML = ''; 
+        mobileCards.innerHTML = '';
+        emptyState.style.display = 'block'; 
+        return; 
+      }
+      emptyState.style.display = 'none';
+      
+      const statusMap = { 
+        'pending': { label: 'قيد الانتظار', class: 'status-pending' }, 
+        'confirmed': { label: 'مؤكدة', class: 'status-confirmed' }, 
+        'done': { label: 'مكتملة', class: 'status-done' }, 
+        'cancelled': { label: 'ملغاة', class: 'status-cancelled' } 
+      };
+      
+      // 1. بناء جدول الكمبيوتر
       tbody.innerHTML = filtered.map((b, i) => {
         const st = statusMap[b.status] || statusMap.pending;
         return `
           <tr>
-            <td data-label="#">${filtered.length - i}</td>
-            <td data-label="الاسم"><strong>${b.name}</strong></td>
-            <td data-label="الجوال"><a href="tel:+967${b.phone}" style="color:#2980b9;text-decoration:none;">${b.phone}</a></td>
-            <td data-label="الخدمة">${b.service}</td>
-            <td data-label="التاريخ">${b.date}</td>
-            <td data-label="الوقت">${b.time}</td>
-            <td data-label="كوبون">${b.coupon ? `<span class="status-badge status-confirmed">${b.coupon.code}</span>` : '—'}</td>
-            <td data-label="الحالة"><span class="status-badge ${st.class}">${st.label}</span></td>
-            <td data-label="إجراءات">
+            <td>${filtered.length - i}</td>
+            <td><strong>${b.name}</strong></td>
+            <td><a href="tel:+967${b.phone}" style="color:#2980b9;text-decoration:none;">${b.phone}</a></td>
+            <td>${b.service}</td>
+            <td>${b.date}</td>
+            <td>${b.time}</td>
+            <td>${b.coupon ? `<span class="status-badge status-confirmed">${b.coupon.code}</span>` : '—'}</td>
+            <td><span class="status-badge ${st.class}">${st.label}</span></td>
+            <td>
               ${b.status === 'pending' ? `<button class="action-btn confirm" onclick="changeStatus(${b.id}, 'confirmed')" title="تأكيد الحجز">✓</button>` : ''}
               ${b.status === 'confirmed' ? `<button class="action-btn done" onclick="changeStatus(${b.id}, 'done')" title="إكمال">✔</button>` : ''}
               ${b.status !== 'cancelled' && b.status !== 'done' ? `<button class="action-btn cancel" onclick="changeStatus(${b.id}, 'cancelled')" title="إلغاء">✕</button>` : ''}
@@ -250,9 +297,64 @@
             </td>
           </tr>`;
       }).join('');
+
+      // 2. بناء بطاقات الجوال
+      mobileCards.innerHTML = filtered.map(b => {
+        const st = statusMap[b.status] || statusMap.pending;
+        return `
+          <div class="booking-card">
+            <div class="card-header">
+              <div class="name">${b.name}</div>
+              <div><span class="status-badge ${st.class}">${st.label}</span></div>
+            </div>
+            <div class="card-body">
+              <div class="info-row">
+                <span class="info-label">الجوال:</span>
+                <span class="info-value"><a href="tel:+967${b.phone}" style="color:#2980b9;text-decoration:none;">${b.phone}</a></span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">الخدمة:</span>
+                <span class="info-value">${b.service}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">الموعد:</span>
+                <span class="info-value">${b.date} - ${b.time}</span>
+              </div>
+              ${b.coupon ? `
+              <div class="info-row">
+                <span class="info-label">كوبون:</span>
+                <span class="info-value"><span class="status-badge status-confirmed">${b.coupon.code}</span></span>
+              </div>` : ''}
+            </div>
+            <div class="card-footer">
+              ${b.status === 'pending' ? `<button class="action-btn confirm" onclick="changeStatus(${b.id}, 'confirmed')">✓ تأكيد</button>` : ''}
+              ${b.status === 'confirmed' ? `<button class="action-btn done" onclick="changeStatus(${b.id}, 'done')">✔ إكمال</button>` : ''}
+              ${b.status !== 'cancelled' && b.status !== 'done' ? `<button class="action-btn cancel" onclick="changeStatus(${b.id}, 'cancelled')">✕ إلغاء</button>` : ''}
+              <button class="action-btn delete" onclick="deleteBooking(${b.id})">🗑 حذف</button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
-    function changeStatus(id, newStatus) { const bookings = getBookings(); const b = bookings.find(x => x.id === id); if (b) { b.status = newStatus; saveBookings(bookings); renderTable(); updateStats(); } }
-    function deleteBooking(id) { if (!confirm('هل أنت متأكد من حذف هذا الحجز؟')) return; const bookings = getBookings().filter(x => x.id !== id); saveBookings(bookings); renderTable(); updateStats(); }
+    
+    function changeStatus(id, newStatus) { 
+      const bookings = getBookings(); 
+      const b = bookings.find(x => x.id === id); 
+      if (b) { 
+        b.status = newStatus; 
+        saveBookings(bookings); 
+        renderTable(); 
+        updateStats(); 
+      } 
+    }
+    
+    function deleteBooking(id) { 
+      if (!confirm('هل أنت متأكد من حذف هذا الحجز؟')) return; 
+      const bookings = getBookings().filter(x => x.id !== id); 
+      saveBookings(bookings); 
+      renderTable(); 
+      updateStats(); 
+    }
   </script>
 </body>
 </html>
